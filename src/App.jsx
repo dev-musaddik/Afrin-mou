@@ -4,6 +4,7 @@ import StarfieldBackground from './components/StarfieldBackground';
 import SpotlightCursor from './components/SpotlightCursor';
 import BiometricGate from './components/BiometricGate';
 import PrivacyShield from './components/PrivacyShield';
+import Watermark from './components/Watermark';
 import HeroGlitch from './components/HeroGlitch';
 import BentoGrid from './components/BentoGrid';
 import DeveloperHighlight from './components/DeveloperHighlight';
@@ -18,6 +19,7 @@ function App() {
       <StarfieldBackground />
       <SpotlightCursor />
       <PrivacyShield />
+      <Watermark />
 
       <AnimatePresence>
         {!accessGranted && (

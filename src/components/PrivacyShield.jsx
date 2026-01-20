@@ -50,12 +50,30 @@ const PrivacyShield = () => {
       }
     };
 
+    // Detect Resize (often happens when screenshot UI appears on mobile)
+    const handleResize = () => {
+      // Check if height changed significantly (keyboard or screenshot tool)
+      // This is a heuristic
+      triggerWarning();
+    };
+
+    // Detect Print attempt
+    const handlePrint = (e) => {
+       if (e.matches) {
+         triggerWarning();
+       }
+    };
+
     // Add listeners
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('keydown', handleKeyDown);
     window.addEventListener('blur', handleBlur);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     document.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('resize', handleResize);
+    
+    const printMediaQuery = window.matchMedia('print');
+    printMediaQuery.addEventListener('change', handlePrint);
     
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
@@ -63,6 +81,8 @@ const PrivacyShield = () => {
       window.removeEventListener('blur', handleBlur);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       document.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('resize', handleResize);
+      printMediaQuery.removeEventListener('change', handlePrint);
     };
   }, []);
 
