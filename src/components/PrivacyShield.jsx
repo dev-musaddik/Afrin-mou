@@ -43,17 +43,26 @@ const PrivacyShield = () => {
       }
     };
 
+    // Mobile: Detect 3-finger touch (often used for screenshots)
+    const handleTouchStart = (e) => {
+      if (e.touches.length > 2) {
+        triggerWarning();
+      }
+    };
+
     // Add listeners
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('keydown', handleKeyDown);
     window.addEventListener('blur', handleBlur);
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('touchstart', handleTouchStart);
     
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('blur', handleBlur);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('touchstart', handleTouchStart);
     };
   }, []);
 
