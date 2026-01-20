@@ -32,13 +32,28 @@ const PrivacyShield = () => {
       setTimeout(() => setWarning(false), 2000);
     };
 
+    // Aggressive Privacy Mode: Trigger on window blur (switching tabs/apps) or visibility change
+    const handleBlur = () => {
+      triggerWarning();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        triggerWarning();
+      }
+    };
+
     // Add listeners
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('blur', handleBlur);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('blur', handleBlur);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
